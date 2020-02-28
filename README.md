@@ -1,8 +1,8 @@
 ## Overview
 
-A simple pi generator in Rust, using Chudnovsky's algorithm.
+A simple π generator in Rust, using Chudnovsky's algorithm.
 
-Future ideas: find self locating numbers in pie, and then loops. Visualise this beautifully.
+Future ideas: find self locating numbers in π, and then loops. Visualise this beautifully.
 
 ## Resources
 
