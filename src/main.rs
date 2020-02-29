@@ -68,8 +68,9 @@ impl Spigot {
         Spigot { current_digit: 0 }
     }
 
+    // pi = stream next safe prod cons init lfts where ...
     fn get_digit(&mut self, k: i32) -> Digit {
-        self.current_digit = k;
+        self.current_digit = 0;
 
         println!("get digit: {}", k);
 
@@ -77,19 +78,22 @@ impl Spigot {
         let mut state: LFT = (1, 0, 0, 1);
         let mut digit = Default::default();
 
-        // rely on the state converging to break out of the loop
+        // rely on the state converging to break out of the loop??
         for i in 1.. {
-            let lft: LFT = (i, 4 * i + 2, 0, 2 * i + 1);
-            println!("lft: {:?}", lft);
-
             println!("state: {:?}", state);
-            let prod = prod(comp(state, lft), k);
-            println!("prod: {:?}", prod);
-            if safe(prod, k) {
-                digit = next(state);
-                break;
+            let next = next(state);
+            println!("next: {:?}", next);
+
+            if safe(state, next) {
+                digit = next;
+                println!("digit: {}", digit);
+                state = prod(state, next);
+                self.current_digit += 1;
+                if self.current_digit == k {
+                    //break;
+                }
             } else {
-                state = prod;
+                state = comp(state, (i, 4 * i + 2, 0, 2 * i + 1));
             }
         }
 
@@ -152,6 +156,6 @@ fn main() {
     println!();
     */
 
-    let k = 2;
+    let k = 3;
     println!("Digit number {} of π is {}", k, pi_iter.get_digit(k));
 }
